@@ -6,6 +6,7 @@ import Products from "./pages/Products";
 import Profile from "./pages/Profile";
 import NoPage from "./pages/NoPage";
 import React from "react";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="products" element={<Products />} />
+            <Route path="register" element={<Register />} />
             <Route path="profile" element={<Profile />} />
             <Route path="*" element={<NoPage />} />
           </Route>

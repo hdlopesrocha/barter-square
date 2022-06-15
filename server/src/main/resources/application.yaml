@@ -1,3 +1,7 @@
 signatureSecret: ${b2Signature}
+password: ${b2Password}
+email: ${b2Email}
+host: ${b2Host}
+
 server:
   port: 9000
