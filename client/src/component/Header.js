@@ -1,21 +1,24 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 function Header() {
   return (
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/products">Products</Link>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-        </ul>
-      </nav>
+      <Navbar bg="dark" variant="dark">
+        <Navbar.Brand>Barter Square</Navbar.Brand>
+          <Nav>
+            <Nav.Link>
+              <Link to="/">Home</Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link to="/products">Products</Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link to="/profile">Profile</Link>
+            </Nav.Link>
+          </Nav>
+      </Navbar>
   );
 }
 
