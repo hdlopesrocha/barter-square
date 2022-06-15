@@ -5,14 +5,14 @@ public class RegisterPersonCommand {
   private String username;
   private String password;
   private String email;
-  private String emailVerification;
+  private String token;
 
   public RegisterPersonCommand(String username, String email, String password,
-      String emailVerification) {
+      String token) {
     this.username = username;
     this.email = email;
     this.password = password;
-    this.emailVerification = emailVerification;
+    this.token = token;
   }
 
   public String getUsername() {
@@ -27,7 +27,7 @@ public class RegisterPersonCommand {
     return email;
   }
 
-  public String getEmailVerification() {
-    return emailVerification;
+  public String getToken() {
+    return token;
   }
 }

@@ -15,7 +15,7 @@ function Header() {
               <Link to="/products">Products</Link>
             </Nav.Link>
             <Nav.Link>
-              <Link to="/register">Register</Link>
+              <Link to="/verifyEmail">Register</Link>
             </Nav.Link>
             <Nav.Link>
               <Link to="/profile">Profile</Link>
