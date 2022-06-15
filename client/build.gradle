@@ -1,0 +1,24 @@
+plugins {
+  id "com.github.node-gradle.node" version "3.3.0"
+}
+
+group = 'org.market'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+	mavenCentral()
+}
+
+npm_update {
+  args = ['--production', '--loglevel', 'warn']
+}
+
+task install(type: NpmTask) {
+  // install the express package only
+  args = ['install', 'express', '--save-dev']
+}
+
+task start(type: NpmTask) {
+    args = ['start']
+}
+
