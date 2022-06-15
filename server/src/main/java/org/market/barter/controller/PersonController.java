@@ -2,12 +2,15 @@ package org.market.barter.controller;
 
 import javax.mail.MessagingException;
 
+import org.market.barter.command.AuthenticatePersonCommand;
 import org.market.barter.command.RegisterPersonCommand;
 import org.market.barter.command.SendEmailCommand;
 import org.market.barter.command.VerifyEmailCommand;
 import org.market.barter.exception.BarterSquareException;
 import org.market.barter.service.EmailService;
 import org.market.barter.service.PersonService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +46,11 @@ public class PersonController {
   @PostMapping(value = "/register")
   public void register(@RequestBody RegisterPersonCommand command) throws BarterSquareException {
     personService.registerPerson(command);
+  }
+
+  @PostMapping(value = "/auth")
+  public ResponseEntity<?> authenticate(@RequestBody AuthenticatePersonCommand command) throws BarterSquareException {
+    boolean auth = personService.authenticatePerson(command);
+    return ResponseEntity.status(auth ? HttpStatus.OK : HttpStatus.UNAUTHORIZED).body(null);
   }
 }

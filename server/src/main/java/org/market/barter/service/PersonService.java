@@ -3,6 +3,8 @@ package org.market.barter.service;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.market.barter.command.AuthenticatePersonCommand;
 import org.market.barter.command.RegisterPersonCommand;
 import org.market.barter.exception.BarterSquareException;
 import org.market.barter.exception.InvalidTokenException;
@@ -39,17 +41,26 @@ public class PersonService {
 
     UUID salt = UUID.randomUUID();
     String hashStr = salt.toString() + command.getPassword();
-    byte [] hash = securityService.getHash(hashStr.getBytes(StandardCharsets.UTF_8));
+    String hash = securityService.getHash(hashStr);
 
-    Person person = new Person(command.getUsername(), command.getEmail(), salt.toString().getBytes(), hash);
+    Person person = new Person(command.getUsername(), command.getEmail(), salt.toString(), hash);
     personRepository.save(person);
   }
 
+  public boolean authenticatePerson(AuthenticatePersonCommand command) {
+    Optional<Person> existingPerson = personRepository.findById(command.getUsername());
+    if(existingPerson.isEmpty()) {
+      return false;
+    }
+    Person person = existingPerson.get();
+    String hashStr = securityService.getHash(person.getSalt() + command.getPassword());
+
+    return hashStr.equals(person.getHash());
+  }
 
   public String computeEmailVerification(String email) {
     String hashStr = signatureSecret + email;
-    byte [] hash = securityService.getHash(hashStr.getBytes(StandardCharsets.UTF_8));
-    return securityService.toBase64(hash);
+    return securityService.getHash(hashStr);
   }
 
 }

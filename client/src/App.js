@@ -8,6 +8,7 @@ import NoPage from "./pages/NoPage";
 import React from "react";
 import Register from "./pages/Register";
 import VerifyEmail from "./pages/VerifyEmail";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="products" element={<Products />} />
             <Route path="verifyEmail" element={<VerifyEmail />} />
+            <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="profile" element={<Profile />} />
             <Route path="*" element={<NoPage />} />

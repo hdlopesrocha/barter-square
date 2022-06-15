@@ -9,13 +9,13 @@ public class Person {
   private String username;
 
   private String email;
-  private byte [] salt;
-  private byte [] hash;
+  String salt;
+  private String hash;
   private Date createdDate;
   private Date lastActivity;
   private PersonStatus status;
 
-  public Person(String username, String email, byte [] salt, byte [] hash) {
+  public Person(String username, String email, String salt, String hash) {
     this.username = username;
     this.email = email;
     this.salt = salt;
@@ -33,11 +33,11 @@ public class Person {
     return email;
   }
 
-  public byte[] getSalt() {
+  public String getSalt() {
     return salt;
   }
 
-  public byte[] getHash() {
+  public String getHash() {
     return hash;
   }
 
