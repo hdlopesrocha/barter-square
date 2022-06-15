@@ -9,8 +9,22 @@ repositories {
 	mavenCentral()
 }
 
+node {
+    download = true
+    version = "16.14.0"
+    npmVersion = ""
+    distBaseUrl = "https://nodejs.org/dist"
+    npmInstallCommand = "install"
+    workDir = file("${project.projectDir}/.gradle/nodejs")
+    npmWorkDir = file("${project.projectDir}/.gradle/npm")
+}
+
 npm_update {
   args = ['--production', '--loglevel', 'warn']
+}
+
+task build(type: NpmTask) {
+    args = ['run', 'build']
 }
 
 task install(type: NpmTask) {

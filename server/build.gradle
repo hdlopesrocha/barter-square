@@ -23,6 +23,9 @@ processResources {
 	filesMatching("**/*.yaml") {
 		expand project.properties
 	}
+	from ('../client/build') {
+		into 'main/static'
+	}
 }
 
 tasks.named('test') {
