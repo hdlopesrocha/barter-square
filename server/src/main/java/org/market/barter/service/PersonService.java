@@ -1,9 +1,12 @@
 package org.market.barter.service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.UUID;
 import org.market.barter.command.RegisterPersonCommand;
-import org.market.barter.command.VerifyEmailCommand;
+import org.market.barter.exception.BarterSquareException;
+import org.market.barter.exception.InvalidTokenException;
+import org.market.barter.exception.PersonAlreadyRegisteredException;
 import org.market.barter.model.Person;
 import org.market.barter.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +27,16 @@ public class PersonService {
     this.personRepository = personRepository;
   }
 
-  public void registerPerson(RegisterPersonCommand command) {
+  public void registerPerson(RegisterPersonCommand command) throws BarterSquareException {
+    String token = computeEmailVerification(command.getEmail());
+    if(!token.equals(command.getToken())) {
+      throw new InvalidTokenException();
+    }
+    Optional<Person> existingPerson = personRepository.findById(command.getUsername());
+    if(existingPerson.isPresent()) {
+      throw new PersonAlreadyRegisteredException();
+    }
+
     UUID salt = UUID.randomUUID();
     String hashStr = salt.toString() + command.getPassword();
     byte [] hash = securityService.getHash(hashStr.getBytes(StandardCharsets.UTF_8));
@@ -34,8 +46,8 @@ public class PersonService {
   }
 
 
-  public String computeEmailVerification(VerifyEmailCommand command) {
-    String hashStr = signatureSecret + command.getEmail();
+  public String computeEmailVerification(String email) {
+    String hashStr = signatureSecret + email;
     byte [] hash = securityService.getHash(hashStr.getBytes(StandardCharsets.UTF_8));
     return securityService.toBase64(hash);
   }
