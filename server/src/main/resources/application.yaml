@@ -1,0 +1,3 @@
+signatureSecret: ${b2Signature}
+server:
+  port: 9000
